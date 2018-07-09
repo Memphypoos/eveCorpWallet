@@ -4,4 +4,5 @@
 Requires the following Python addons (e.g. sudo pip install requests)
 - install requests
 - install json
+- install ConfigParser
 
