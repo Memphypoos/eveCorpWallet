@@ -1,6 +1,7 @@
 # eveCorpWallet
-# Python 3.0, import Corp Wallet and export to GoogleDrive
+# Python 3.7+
 
 Requires the following Python addons (e.g. sudo pip install requests)
 - install requests
-- install configparser
+- install json
+
