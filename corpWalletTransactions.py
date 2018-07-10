@@ -91,7 +91,6 @@ bounty100 = bounty * 100 / 5
 ratting95 = ratting100 - ratting
 agent95 = agent100 - agent
 bounty95 = bounty100 - bounty
-print(bounty100)
 
 ###Constructing the Slack Message###
 slack_message = str("*Corp Wallet - Division 1 (5% Tax Rate)*\n")+str("Planetary Import Tax: ")+ str("{:,.2f}".format(piImIncome))+" ISK"+str("\n") + str("Planetary Export Tax: ") + str("{:,.2f}".format(piExIncome))+" ISK"+"\n" +"Agent Mission Reward: "+str("{:,.2f}".format(agent))+" ISK"+"\n" + "Bounty Prizes: "+str("{:,.2f}".format(bounty))+" ISK"+ "\n" + "Ratting: "+str("{:,.2f}".format(ratting))+" ISK"+ "\n" + "Project Discovery Reward: "+str("{:,.2f}".format(discover))+" ISK"+"\n"+"\n"+"*Total Income to Players (100% less 5% Tax)*"+"\n"+"Ratting: "+str("{:,.2f}".format(ratting95))+" ISK"+"\n"+"Agent Mission Reward: "+str("{:,.2f}".format(agent95))+" ISK"+"\n"+"Bounty Prizes: "+str("{:,.2f}".format(bounty95))+" ISK"+"\n"+"\n"+"_Totals are as of the last 30 days_"
