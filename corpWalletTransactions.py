@@ -86,7 +86,7 @@ for transaction in div_one():
 
 
 ###Constructing the Slack Message###
-slack_message = str("*Corp Wallet - Division 1 (Income)*\n")+str("Planetary Import Tax: ")+ str("{:,.2f}".format(piImIncome))+" ISK"+str("\n") + str("Planetary Export Tax: ") + str("{:,.2f}".format(piExIncome))+" ISK"+"\n" +"Agent Mission Reward: "+str("{:,.2f}".format(agent))+" ISK"+"\n" + "Bounty Prizes: "+str("{:,.2f}".format(bounty))+" ISK"+ "\n" + "Ratting: "+str("{:,.2f}".format(ratting))+" ISK"+ "\n" + "Project Discovery Reward: "+str("{:,.2f}".format(discover))+" ISK"+"\n"+"\n"+"_Totals are as of the last 30 days_"
+slack_message = str("*Corp Wallet - Division 1 (5% Tax Rate)*\n")+str("Planetary Import Tax: ")+ str("{:,.2f}".format(piImIncome))+" ISK"+str("\n") + str("Planetary Export Tax: ") + str("{:,.2f}".format(piExIncome))+" ISK"+"\n" +"Agent Mission Reward: "+str("{:,.2f}".format(agent))+" ISK"+"\n" + "Bounty Prizes: "+str("{:,.2f}".format(bounty))+" ISK"+ "\n" + "Ratting: "+str("{:,.2f}".format(ratting))+" ISK"+ "\n" + "Project Discovery Reward: "+str("{:,.2f}".format(discover))+" ISK"+"\n"+"\n"+"_Totals are as of the last 30 days_"
 
 print(slack_message)
 
