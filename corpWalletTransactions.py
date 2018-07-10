@@ -1,6 +1,7 @@
 import configparser
 import requests
 import json
+import csv
 from requests.auth import HTTPBasicAuth
 
 ##Eve developers.com ID's
@@ -11,7 +12,7 @@ client_key = '7ZcremKn9S7OlaAsv89jaMlL70OFMKSUjOuPI6MC'
 config = configparser.ConfigParser()
 config.read("config.ini")
 print("reading config...")
-refresh_token = config.get("config", "refresh_token")
+refresh_token = config.get("main", "refresh_token")
 slack_token = config.get("slack","slack_key")
 
 ##Request access_token using refresh token
@@ -32,9 +33,13 @@ div_one = requests.get("https://esi.evetech.net/v3/corporations/98088408/wallets
 #declare variables
 slack_message = ""
 piExIncome = 0 # this is the base amount
-piImIncome = 0 
-ratting = 0 # this is the base amount
+piImIncome = 0 # this is the base amount
+bounty = 0 # killing players with bounty bounty_prize
+ratting = 0 # ratting bounty_prizes
+agent = 0 # this is the base amount
+insurance = 0 # this is the base amount
 bounty = 0 # this is the base amount
+discover = 0 # this is the base amount
 
 # Sort through the transactions one by one - Put the row into a variable called transaction
 for transaction in div_one():
@@ -42,21 +47,46 @@ for transaction in div_one():
  if (transaction["ref_type"]) == "planetary_export_tax":
    (transaction["amount"]) > 0
    piExIncome += transaction["amount"]
-   
-#print("Planetary Exports: "+"{:,.2f}".format(piExIncome))
-
-
- 
+    
 for transaction in div_one():
 # Build an extra line into the slack message for this transaction
  if (transaction["ref_type"]) == "planetary_import_tax":
    (transaction["amount"]) > 0
    piImIncome += transaction["amount"]
-#print("Planetary Imports: "+"{:,.2f}".format(piImIncome))
+
+for transaction in div_one():
+# Build an extra line into the slack message for this transaction
+ if (transaction["ref_type"]) == "agent_mission_reward":
+   (transaction["amount"]) > 0
+   agent += transaction["amount"]
+
+for transaction in div_one():
+# Build an extra line into the slack message for this transaction
+ if (transaction["ref_type"]) == "agent_mission_time_bonus_reward":
+   (transaction["amount"]) > 0
+   agent += transaction["amount"]
+
+for transaction in div_one():
+# Build an extra line into the slack message for this transaction
+ if (transaction["ref_type"]) == "bounty_prize":
+   (transaction["amount"]) > 0
+   bounty += transaction["amount"]
+
+for transaction in div_one():
+# Build an extra line into the slack message for this transaction
+ if (transaction["ref_type"]) == "bounty_prizes":
+   (transaction["amount"]) > 0
+   ratting += transaction["amount"]
+
+for transaction in div_one():
+# Build an extra line into the slack message for this transaction
+ if (transaction["ref_type"]) == "project_discovery_reward":
+   (transaction["amount"]) > 0
+   discover += transaction["amount"]
+
 
 ###Constructing the Slack Message###
-slack_message = str("*Corp Wallet - Division 1*\n")+str("Planetary Import Tax: ")+ str("{:,.2f}".format(piImIncome))+str("\n") + str("Planetary Export Tax: ") + str("{:,.2f}".format(piExIncome))
-#slack_message = ("Corp Wallet - Division 1\n")+"{:,.2f}".format(piImIncome)+(" ISK from Planetary Export Tax\n")+"{:,.2f}".format(piExIncome)+(" ISK from Planetary Import Tax")
+slack_message = str("*Corp Wallet - Division 1 (Income)*\n")+str("Planetary Import Tax: ")+ str("{:,.2f}".format(piImIncome))+" ISK"+str("\n") + str("Planetary Export Tax: ") + str("{:,.2f}".format(piExIncome))+" ISK"+"\n" +"Agent Mission Reward: "+str("{:,.2f}".format(agent))+" ISK"+"\n" + "Bounty Prizes: "+str("{:,.2f}".format(bounty))+" ISK"+ "\n" + "Ratting: "+str("{:,.2f}".format(ratting))+" ISK"+ "\n" + "Project Discovery Reward: "+str("{:,.2f}".format(discover))+" ISK"+"\n"+"\n"+"_Totals are as of the last 30 days_"
 
 print(slack_message)
 
